@@ -1,0 +1,25 @@
+# 비밀 키 — 절대 커밋 금지
+src/config.js
+
+# 의존성
+node_modules/
+
+# 대용량 원본 데이터 (빌드 시 다운로드) — 268MB
+data/*.pbf
+
+# 배포 산출물 (assemble-site.js 가 생성)
+public/
+_site/
+
+# 에디터 / OS
+.claude/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# 참고: data/transit-graph.json (≈2MB) 은 일부러 커밋합니다.
+#       → 클론/배포 시 빌드 없이 바로 동작. 데이터 갱신은 `npm run build:transit`.
+
+CLAUDE.md

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>대중교통 이동 범위 지도 (로컬)</title>
+  <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+
+  <!-- ① 카카오 지도 키 (최초 1회) -->
+  <div id="api-key-panel" class="overlay-panel">
+    <div class="overlay-panel-inner">
+      <h2>카카오 지도 키</h2>
+      <p class="hint">
+        지도 표시·주소 검색에만 사용됩니다. 이동 시간 계산은 전부
+        <b>기기 안에서 처리됩니다.</b>
+      </p>
+      <div class="field">
+        <label>카카오 JavaScript 키</label>
+        <input id="input-js-key" type="text" placeholder="JavaScript 앱 키" />
+      </div>
+      <button id="btn-apply-keys" class="btn-primary">지도 열기</button>
+      <div id="key-error" class="key-error hidden"></div>
+    </div>
+  </div>
+
+  <!-- ② 사이드 패널 -->
+  <aside id="side-panel" class="side-panel hidden">
+
+    <!-- 출발지 -->
+    <section class="panel-section">
+      <div class="section-title"><span class="step">1</span> 출발지</div>
+      <div class="search-row">
+        <input id="input-address" type="text" placeholder="주소 검색 또는 지도 클릭" />
+        <button id="btn-search">검색</button>
+      </div>
+      <div id="search-results" class="search-results hidden"></div>
+      <p class="map-hint">📍 지도를 클릭해도 출발지가 설정됩니다</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 최대 환승 횟수 -->
+    <section class="panel-section">
+      <div class="section-title">
+        <span class="step">2</span> 최대 환승
+        <span id="transfer-value" class="time-value">2회</span>
+      </div>
+      <input id="transfer-slider" type="range" min="0" max="2" step="1" value="2" />
+      <div class="slider-scale">
+        <span>0회</span><span>1회</span><span>2회</span>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 계산 -->
+    <section class="panel-section">
+      <div class="section-title"><span class="step">3</span> 범위 계산</div>
+      <button id="btn-run" class="btn-find" disabled>📡 이 위치에서 계산</button>
+      <p class="map-hint">출발지를 정하면 활성화됩니다</p>
+    </section>
+
+    <!-- 진행 -->
+    <div id="progress-area" class="progress-area hidden">
+      <div class="progress-track"><div id="progress-bar" class="progress-fill"></div></div>
+      <div id="progress-text" class="progress-text"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 표시 시간 슬라이더 -->
+    <section class="panel-section">
+      <div class="section-title">
+        <span class="step">4</span> 표시 시간
+        <span id="time-value" class="time-value">60분</span>
+      </div>
+      <input id="time-slider" type="range" min="0" max="120" step="5" value="60" disabled />
+      <div class="slider-scale" id="slider-scale"></div>
+      <p class="map-hint">슬라이더를 움직이면 즉시 범위가 바뀝니다</p>
+    </section>
+
+    <!-- 상태/범례 -->
+    <div id="status" class="status hidden"></div>
+    <div id="legend" class="legend hidden"></div>
+
+    <button id="btn-reset-keys" class="btn-link">카카오 키 변경</button>
+  </aside>
+
+  <div id="map"></div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

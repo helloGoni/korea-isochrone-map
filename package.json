@@ -1,0 +1,37 @@
+{
+  "name": "korea-isochrone-map",
+  "version": "1.0.0",
+  "description": "외부 경로 API 없이 브라우저에서 직접 다익스트라로 대중교통(버스+지하철) 이동 범위(등시간선)를 그리는 지도",
+  "type": "commonjs",
+  "scripts": {
+    "build:transit": "node scripts/build-from-pbf.js",
+    "build:site": "node scripts/assemble-site.js"
+  },
+  "keywords": [
+    "isochrone",
+    "transit",
+    "public-transport",
+    "dijkstra",
+    "marching-squares",
+    "kakao-map",
+    "openstreetmap",
+    "korea",
+    "vanilla-js"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/helloGoni/korea-isochrone-map#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/helloGoni/korea-isochrone-map.git"
+  },
+  "bugs": {
+    "url": "https://github.com/helloGoni/korea-isochrone-map/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "osm-pbf-parser": "^2.3.0",
+    "through2": "^4.0.2"
+  }
+}

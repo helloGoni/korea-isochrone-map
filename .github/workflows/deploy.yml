@@ -1,0 +1,54 @@
+name: Deploy to GitHub Pages
+
+# main 에 푸시하면 정적 사이트를 GitHub Pages 로 배포합니다.
+# 그래프(data/transit-graph.json)는 저장소에 포함되어 있어 빌드가 필요 없고,
+# 카카오 키만 시크릿으로 주입합니다.
+#
+# 준비물:
+#   - 저장소 Settings → Secrets and variables → Actions 에 KAKAO_JS_KEY 추가
+#   - 저장소 Settings → Pages → Source 를 "GitHub Actions" 로 설정
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 사이트 구성 (config 주입 + public 생성)
+        env:
+          KAKAO_JS_KEY: ${{ secrets.KAKAO_JS_KEY }}
+          MAX_MINUTES: 120
+          GRID_CELL_M: 100
+        run: node scripts/assemble-site.js
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
