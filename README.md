@@ -10,8 +10,6 @@
 
 <a href="https://korea-isochrone-map.vercel.app"><img src="https://img.shields.io/badge/%E2%96%B6_%EB%8D%B0%EB%AA%A8_%EB%B0%94%EB%A1%9C%EA%B0%80%EA%B8%B0-korea--isochrone--map.vercel.app-10b981?style=for-the-badge" alt="데모 바로가기" /></a>
 
-<br /><br />
-
 [![Deploy](https://github.com/helloGoni/korea-isochrone-map/actions/workflows/deploy.yml/badge.svg)](https://github.com/helloGoni/korea-isochrone-map/actions/workflows/deploy.yml)
 [![Last commit](https://img.shields.io/github/last-commit/helloGoni/korea-isochrone-map)](https://github.com/helloGoni/korea-isochrone-map/commits/main)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
