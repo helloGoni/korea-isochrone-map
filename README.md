@@ -1,16 +1,38 @@
-# 대중교통 이동 범위 지도 (Korea Transit Isochrone)
+<div align="center">
 
-> 출발지에서 **버스·지하철로 n분 이내에 갈 수 있는 영역**을 지도에 색으로 표시하는 등시간선(Isochrone) 지도.
+# 🚇 대중교통 이동 범위 지도
 
-![license](https://img.shields.io/badge/license-MIT-blue)
-![build](https://img.shields.io/badge/build-none%20(vanilla%20JS)-success)
-![runtime API](https://img.shields.io/badge/runtime%20route%20API-0%20calls-success)
+**버스·지하철로 _n분 안에_ 갈 수 있는 곳을 지도에 그려주는 등시간선(Isochrone) 지도**
+
+외부 경로 API 호출 0회 · 브라우저에서 직접 계산 · 빌드 도구 없는 Vanilla JS
+
+<br />
+
+<a href="https://korea-isochrone-map.vercel.app"><img src="https://img.shields.io/badge/%E2%96%B6_%EB%8D%B0%EB%AA%A8_%EB%B0%94%EB%A1%9C%EA%B0%80%EA%B8%B0-korea--isochrone--map.vercel.app-10b981?style=for-the-badge" alt="데모 바로가기" /></a>
+
+<br /><br />
+
+[![Deploy](https://github.com/helloGoni/korea-isochrone-map/actions/workflows/deploy.yml/badge.svg)](https://github.com/helloGoni/korea-isochrone-map/actions/workflows/deploy.yml)
+[![Last commit](https://img.shields.io/github/last-commit/helloGoni/korea-isochrone-map)](https://github.com/helloGoni/korea-isochrone-map/commits/main)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+![Route API](https://img.shields.io/badge/%EA%B2%BD%EB%A1%9C_API_%ED%98%B8%EC%B6%9C-0%ED%9A%8C-success)
+
+![JavaScript](https://img.shields.io/badge/Vanilla_JS-F7DF1E?logo=javascript&logoColor=black)
+![Kakao Map](https://img.shields.io/badge/Kakao_Map-FFCD00?logo=kakao&logoColor=black)
+![OpenStreetMap](https://img.shields.io/badge/OpenStreetMap-7EBC6F?logo=openstreetmap&logoColor=white)
+![RAPTOR](https://img.shields.io/badge/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-RAPTOR_+_Marching_Squares-6366f1)
+
+<br />
+
+<img src="docs/demo.gif" alt="시간 슬라이더를 움직이면 도달 범위가 바뀌고, 마커를 끌면 자동으로 다시 계산되는 데모" width="800" />
+
+</div>
+
+<br />
 
 **핵심: 이동 시간 계산에 외부 경로 API를 전혀 호출하지 않습니다.** 대중교통 노선 데이터를 파일로 한 번 받아 라우팅 그래프로 만들어 두고, 브라우저에서 **직접 RAPTOR(라운드 기반 최단 경로)** 로 계산합니다. 그래서 API 호출 제한·요금·키 발급이 없고, 한 번 그래프를 만들면 인터넷 없이도 동작합니다.
 
 > 카카오 JavaScript 키는 **지도 표시와 주소 검색**에만 쓰입니다 (지도 SDK 내장 기능, 호출 제한 없음).
-
-![60분 도달 영역](docs/screenshots/02-isochrone-60min.jpg)
 
 > [!IMPORTANT]
 > **버스 데이터는 일부만 들어 있습니다.** 현재 버스 노선은 OpenStreetMap(OSM)에 등록된 것만 포함되어 실제 운행 노선의 일부입니다(지역마다 빠진 노선이 많음). 그래서 버스로 갈 수 있는 범위가 **실제보다 좁게** 나올 수 있습니다. 지하철·전철은 대부분 포함되어 있습니다.
