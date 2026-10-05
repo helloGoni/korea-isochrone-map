@@ -14,7 +14,6 @@ body {
   inset: 0;
   cursor: default;
 }
-#map.picking { cursor: crosshair; }
 
 /* ── API 키 오버레이 ── */
 .overlay-panel {
@@ -105,7 +104,8 @@ label {
   margin-bottom: 5px;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="password"] {
   width: 100%;
   padding: 9px 11px;
   border: 1.5px solid #e2e8f0;
@@ -115,7 +115,8 @@ input[type="text"] {
   transition: border-color .15s;
   background: #f8fafc;
 }
-input[type="text"]:focus { border-color: #3b82f6; background: #fff; }
+input[type="text"]:focus,
+input[type="password"]:focus { border-color: #3b82f6; background: #fff; }
 
 /* ── 검색 행 ── */
 .search-row { display: flex; gap: 6px; }
@@ -146,143 +147,6 @@ input[type="text"]:focus { border-color: #3b82f6; background: #fff; }
   margin-top: 7px;
 }
 
-/* ── 이동 수단 ── */
-.mode-group {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  margin-bottom: 10px;
-}
-
-.mode-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 10px 6px;
-  border: 2px solid #e2e8f0;
-  border-radius: 10px;
-  background: #f8fafc;
-  font-size: 12px;
-  font-weight: 600;
-  color: #64748b;
-  cursor: pointer;
-  transition: all .15s;
-}
-.mode-btn:hover { border-color: #93c5fd; background: #eff6ff; color: #3b82f6; }
-.mode-btn.active { border-color: #3b82f6; background: #eff6ff; color: #1d4ed8; }
-
-.mode-icon { font-size: 20px; }
-
-.mode-group { grid-template-columns: repeat(2, 1fr); }
-
-.local-hint {
-  margin-top: 6px;
-  font-size: 11px;
-  color: #64748b;
-  background: #f1f5f9;
-  border-radius: 6px;
-  padding: 6px 10px;
-  line-height: 1.5;
-}
-.local-hint code {
-  font-size: 10px;
-  background: #e2e8f0;
-  padding: 1px 4px;
-  border-radius: 3px;
-}
-
-.local-commands {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  margin: 6px 0;
-}
-
-.local-commands code {
-  display: block;
-  padding: 3px 6px;
-}
-
-#graph-select {
-  width: 100%;
-  margin-top: 4px;
-  padding: 5px 8px;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 6px;
-  font-size: 11px;
-  background: #fff;
-  outline: none;
-}
-
-/* ── 환승 옵션 ── */
-.sub-option { margin-top: 2px; }
-.sub-option label { margin-bottom: 6px; }
-
-.chip-group { display: flex; flex-wrap: wrap; gap: 5px; }
-
-.chip small { display: block; font-weight: 400; color: #94a3b8; font-size: 10px; }
-.chip.active small { color: #93c5fd; }
-
-.call-estimate {
-  margin-top: 8px;
-  font-size: 12px;
-  color: #64748b;
-  min-height: 16px;
-}
-
-.chip {
-  padding: 4px 10px;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  background: #f8fafc;
-  color: #64748b;
-  cursor: pointer;
-  transition: all .15s;
-}
-.chip:hover { border-color: #93c5fd; color: #3b82f6; }
-.chip.active { border-color: #3b82f6; background: #eff6ff; color: #1d4ed8; }
-
-/* ── 표시 범위 ── */
-.range-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-}
-
-.range-item {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 10px;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-  background: #f8fafc;
-  transition: all .15s;
-  user-select: none;
-}
-.range-item:hover { background: #f1f5f9; }
-.range-item input { display: none; }
-.range-item input:checked ~ * { opacity: 1; }
-
-.range-color {
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
-  background: var(--c);
-  flex-shrink: 0;
-}
-
-.range-item:has(input:checked) {
-  border-color: var(--c, #3b82f6);
-  background: #fff;
-}
-
 /* ── 버튼 ── */
 button { cursor: pointer; border: none; font-family: inherit; }
 
@@ -298,6 +162,17 @@ button { cursor: pointer; border: none; font-family: inherit; }
   transition: background .15s;
 }
 .btn-primary:hover { background: #2563eb; }
+
+.btn-cancel-key {
+  width: 100%;
+  padding: 9px;
+  margin-top: 6px;
+  background: none;
+  color: #64748b;
+  font-size: 13px;
+  border-radius: 10px;
+}
+.btn-cancel-key:hover { background: #f1f5f9; }
 
 #btn-search {
   padding: 9px 14px;
@@ -324,18 +199,6 @@ button { cursor: pointer; border: none; font-family: inherit; }
 }
 .btn-find:hover:not(:disabled) { background: #059669; }
 .btn-find:disabled { background: #d1fae5; color: #6ee7b7; cursor: not-allowed; }
-
-.btn-cancel {
-  padding: 13px 14px;
-  background: #fee2e2;
-  color: #dc2626;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 700;
-  transition: background .15s;
-  white-space: nowrap;
-}
-.btn-cancel:hover { background: #fecaca; }
 
 .btn-link {
   display: block;
@@ -398,27 +261,6 @@ button { cursor: pointer; border: none; font-family: inherit; }
   flex-shrink: 0;
 }
 
-/* ── 힌트 ── */
-.transit-provider-tabs {
-  display: flex;
-  gap: 5px;
-  margin-bottom: 8px;
-}
-
-.tab-sm {
-  padding: 4px 12px;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  background: #f8fafc;
-  color: #64748b;
-  cursor: pointer;
-  transition: all .15s;
-}
-.tab-sm:hover { border-color: #93c5fd; color: #3b82f6; }
-.tab-sm.active { border-color: #3b82f6; background: #eff6ff; color: #1d4ed8; }
-
 /* 시간 슬라이더 */
 .time-value {
   margin-left: auto;
@@ -455,15 +297,60 @@ button { cursor: pointer; border: none; font-family: inherit; }
   border-radius: 8px;
   font-size: 13px;
   line-height: 1.5;
+  white-space: pre-line;
 }
 
 .hint { font-size: 11px; color: #94a3b8; line-height: 1.5; margin-bottom: 14px; }
-.badge {
+
+/* ── 출발지 마커 라벨 ── */
+.origin-label {
+  background: #0f172a;
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+  margin-bottom: 6px;
+}
+
+/* ── 데이터 안내 ── */
+.data-notice {
+  margin: 10px 16px 4px;
+  padding: 9px 12px;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  font-size: 11px;
+  color: #78350f;
+  line-height: 1.55;
+}
+.data-notice summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 12px;
+  list-style-position: inside;
+}
+.data-notice p { margin-top: 7px; }
+.data-notice code {
   font-size: 10px;
   background: #fef3c7;
-  color: #92400e;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.notice-badge {
+  font-size: 10px;
+  background: #f59e0b;
+  color: #fff;
   padding: 1px 6px;
   border-radius: 4px;
-  vertical-align: middle;
-  font-weight: 500;
+  margin-right: 4px;
+  vertical-align: 1px;
 }
+.coverage-list {
+  margin: 8px 0 0;
+  padding-left: 16px;
+}
+.coverage-list small { display: block; color: #a16207; }
+.coverage-error { color: #dc2626; }

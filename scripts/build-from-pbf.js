@@ -78,6 +78,7 @@ async function main() {
   console.log(`   정류장: ${graph.lat.length.toLocaleString()}개`);
   console.log(`   노선:   ${graph.routes.length.toLocaleString()}개`);
   console.log(`   구간:   ${graph.meta.segments.toLocaleString()}개`);
+  console.log(`   수단별: ${JSON.stringify(graph.meta.modes)}`);
   console.log('='.repeat(58));
 }
 
@@ -189,7 +190,7 @@ function downloadRange(url, dest, startAt, total, redirects = 0) {
 
 function pass1Relations(pbfPath) {
   return new Promise((resolve, reject) => {
-    const routes        = [];           // [{ type, stopNodeIds: [...] }]
+    const routes        = [];           // [{ type, name, stopNodeIds: [...] }]
     const neededNodeIds = new Set();
 
     fs.createReadStream(pbfPath)
@@ -211,7 +212,7 @@ function pass1Relations(pbfPath) {
             }
           }
           if (stopNodeIds.length >= 2) {
-            routes.push({ type: routeType, stopNodeIds });
+            routes.push({ type: routeType, name: item.tags?.ref || item.tags?.name || '', stopNodeIds });
           }
         }
         next();
@@ -251,7 +252,7 @@ function pass2Nodes(pbfPath, neededNodeIds) {
 function buildGraph(routes, nodeCoords) {
   const stopIndex = new Map(); // nodeId → 배열 인덱스
   const lat = [], lng = [], name = [];
-  const outRoutes = [];        // [{ s:[stopIdx...], t:[segSec...] }]
+  const outRoutes = [];        // [{ s:[stopIdx...], t:[segSec...], mode, name }]
 
   function getOrAdd(nodeId) {
     if (stopIndex.has(nodeId)) return stopIndex.get(nodeId);
@@ -282,11 +283,16 @@ function buildGraph(routes, nodeCoords) {
       }
       s.push(idx);
     }
-    if (s.length >= 2) outRoutes.push({ s, t });
+    // mode: 화면의 수단별 노선 수 안내용 (OSM route 태그 그대로: subway / bus / light_rail ...)
+    if (s.length >= 2) outRoutes.push({ s, t, mode: route.type, name: route.name });
   }
 
   let segments = 0;
-  for (const r of outRoutes) segments += r.t.length;
+  const modes  = {};
+  for (const r of outRoutes) {
+    segments += r.t.length;
+    modes[r.mode] = (modes[r.mode] || 0) + 1;
+  }
 
   return {
     meta: {
@@ -295,6 +301,7 @@ function buildGraph(routes, nodeCoords) {
       stops:    lat.length,
       routes:   outRoutes.length,
       segments,
+      modes,
     },
     lat, lng, name,
     routes: outRoutes,   // 도보 환승(footpath)은 로드 시 런타임에서 계산

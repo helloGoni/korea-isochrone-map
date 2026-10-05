@@ -1,7 +1,9 @@
 // src/config.js 를 이 파일을 복사해서 만드세요. (git에 커밋되지 않음)
+// config.js 가 없으면 이 파일의 값으로 동작하고, 키는 첫 화면에서 입력합니다.
 //
 // 이동 시간 계산은 전부 기기 안(브라우저)에서 처리합니다.
 // 카카오 JavaScript 키는 지도 표시와 주소 검색에만 쓰입니다.
+// 키를 여기 넣어 두면 입력 화면 없이 바로 지도가 열리고, 화면에 키가 표시되지 않습니다.
 
 export const KAKAO_JS_KEY = '';   // 카카오 JavaScript 앱 키 — developers.kakao.com
 
@@ -12,3 +14,6 @@ export const MAX_MINUTES = 120;
 // 정밀도 = 격자 한 칸 크기(m). 작을수록 경계가 정밀하지만 계산이 느려집니다.
 // 권장 80~250. (예: 60=매우 정밀/무거움, 100=정밀, 200=가벼움)
 export const GRID_CELL_M = 100;
+
+// 처음 마커 위치. 마커를 드래그해서 옮길 수 있습니다.
+export const DEFAULT_ORIGIN = { lat: 37.5559, lng: 126.9723, name: '서울역' };

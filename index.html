@@ -8,8 +8,8 @@
 </head>
 <body>
 
-  <!-- ① 카카오 지도 키 (최초 1회) -->
-  <div id="api-key-panel" class="overlay-panel">
+  <!-- ① 카카오 지도 키 — 설정된 키가 없을 때만 표시 -->
+  <div id="api-key-panel" class="overlay-panel hidden">
     <div class="overlay-panel-inner">
       <h2>카카오 지도 키</h2>
       <p class="hint">
@@ -17,10 +17,13 @@
         <b>기기 안에서 처리됩니다.</b>
       </p>
       <div class="field">
-        <label>카카오 JavaScript 키</label>
-        <input id="input-js-key" type="text" placeholder="JavaScript 앱 키" />
+        <label for="input-js-key">카카오 JavaScript 키</label>
+        <input id="input-js-key" type="password" autocomplete="off" spellcheck="false"
+               placeholder="JavaScript 앱 키" />
       </div>
+      <p id="key-builtin-hint" class="hint hidden">비워 두고 누르면 기본 키를 사용합니다.</p>
       <button id="btn-apply-keys" class="btn-primary">지도 열기</button>
+      <button id="btn-cancel-key" class="btn-cancel-key hidden">취소</button>
       <div id="key-error" class="key-error hidden"></div>
     </div>
   </div>
@@ -32,11 +35,11 @@
     <section class="panel-section">
       <div class="section-title"><span class="step">1</span> 출발지</div>
       <div class="search-row">
-        <input id="input-address" type="text" placeholder="주소 검색 또는 지도 클릭" />
+        <input id="input-address" type="text" placeholder="주소·장소 검색" />
         <button id="btn-search">검색</button>
       </div>
       <div id="search-results" class="search-results hidden"></div>
-      <p class="map-hint">📍 지도를 클릭해도 출발지가 설정됩니다</p>
+      <p class="map-hint">마커를 끌어서 출발지를 옮길 수 있어요</p>
     </section>
 
     <div class="divider"></div>
@@ -58,8 +61,8 @@
     <!-- 계산 -->
     <section class="panel-section">
       <div class="section-title"><span class="step">3</span> 범위 계산</div>
-      <button id="btn-run" class="btn-find" disabled>📡 이 위치에서 계산</button>
-      <p class="map-hint">출발지를 정하면 활성화됩니다</p>
+      <button id="btn-run" class="btn-find">이 위치에서 계산</button>
+      <p class="map-hint">계산한 뒤에는 마커를 옮기면 자동으로 다시 계산됩니다</p>
     </section>
 
     <!-- 진행 -->
@@ -84,6 +87,26 @@
     <!-- 상태/범례 -->
     <div id="status" class="status hidden"></div>
     <div id="legend" class="legend hidden"></div>
+
+    <!-- 데이터 안내 -->
+    <details class="data-notice">
+      <summary>
+        <span class="notice-badge">안내</span>
+        버스 노선은 일부만 들어 있어요
+      </summary>
+      <ul id="coverage-list" class="coverage-list">
+        <li>데이터 불러오는 중...</li>
+      </ul>
+      <p>
+        버스는 OpenStreetMap에 등록된 노선만 들어 있어 실제 운행 노선의 일부입니다.
+        지역마다 빠진 노선이 많아 실제보다 도달 범위가 좁게 나올 수 있어요.
+        지하철·전철은 대부분 포함되어 있습니다.
+      </p>
+      <p>
+        버스 정류장 데이터(노선별 정류장 순서 CSV 등)를 <code>data/</code> 폴더에 넣고
+        <code>data/sources.json</code>에 한 줄 등록하면 코드 수정 없이 바로 계산에 반영됩니다.
+      </p>
+    </details>
 
     <button id="btn-reset-keys" class="btn-link">카카오 키 변경</button>
   </aside>

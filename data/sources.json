@@ -1,0 +1,19 @@
+{
+  "sources": [
+    {
+      "id": "osm",
+      "type": "graph-json",
+      "url": "transit-graph.json",
+      "label": "OpenStreetMap 대중교통",
+      "note": "버스는 OSM에 등록된 일부 노선만 포함"
+    },
+    {
+      "id": "example-bus",
+      "type": "routes-csv",
+      "url": "examples/bus-routes.sample.csv",
+      "label": "예시 버스 CSV",
+      "mode": "bus",
+      "enabled": false
+    }
+  ]
+}
