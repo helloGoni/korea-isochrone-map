@@ -25,6 +25,10 @@ fs.mkdirSync(out, { recursive: true });
 // 1. index.html
 fs.copyFileSync(path.join(root, 'index.html'), path.join(out, 'index.html'));
 
+// 1-1. 링크 공유 미리보기 이미지 (index.html 의 og:image)
+fs.mkdirSync(path.join(out, 'docs'), { recursive: true });
+fs.copyFileSync(path.join(root, 'docs', 'social-preview.png'), path.join(out, 'docs', 'social-preview.png'));
+
 // 2. src/** (단, 로컬 config.js 는 환경변수로 따로 생성)
 fs.cpSync(path.join(root, 'src'), path.join(out, 'src'), {
   recursive: true,

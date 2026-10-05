@@ -332,7 +332,10 @@ korea-isochrone-map/
 ├── scripts/
 │   ├── build-from-pbf.js         # OSM PBF → transit-graph.json
 │   └── assemble-site.js          # 배포용 public/ 생성
-├── docs/screenshots/             # README 스크린샷
+├── docs/
+│   ├── demo.gif                  # README 상단 데모
+│   ├── social-preview.png        # 링크 공유 미리보기 (1280×640)
+│   └── screenshots/              # README 스크린샷
 └── src/
     ├── main.js                   # 진입점: 설정 읽고 IsochroneApp 시작
     ├── config.example.js         # 설정 양식 (복사해서 config.js 로, git 제외)
